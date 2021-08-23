@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -21,27 +22,34 @@ public class Main {
 
 	public static void main(String[] args) {
 
+		// Scanner object to handle user inputs
 		Scanner scan = new Scanner(System.in);
-		String player1 = "Player 1";
-		String player2 = "Player 2";
+
+		Game myGame = new Game(3,3);
+		Player playerA = new Player("Player 1");
+		Player playerB = new Player("Player 2");
 		System.out.println("Welcome to the game, please enter your names! (between 0 and 10 characters)\n");
 
-		player1 = scan.nextLine();
-		player2 = scan.nextLine();
-
-		if (player1.length() > 10) {
-			String cutname1 = player1.substring(0, 10);
-			player1 = cutname1;
-			System.out.println("Welcome: " + cutname1 + " and " + player2 + "\nLet's begin! \n ");
-			}
-		else if(player2.length() > 10) {
-			String cutname2 = player2.substring(0, 10);
-			player2 = cutname2;
-			System.out.println("Welcome: " + player1 + " and " + cutname2 + "\nLet's begin! \n ");	
-		} else {
-			System.out.println("Welcome: " + player1 + " and " + player2 + "\nLet's begin! \n ");
+		// Setting the player names to default in case it's left empty
+		try {
+			// Setting player name and limiting it to 10 characters
+			playerA.setName(scan.nextLine().substring(0, 10));
+			playerB.setName(scan.nextLine().substring(0, 10));
+		} catch (IndexOutOfBoundsException e) {
+			playerA.setName("Player 1");
+			playerB.setName("Player 2");
 		}
-		
+
+		System.out.println("Welcome: " + playerA.getName() + " and " + playerB.getName() + "\nLet's begin! \n ");
+
+		myGame.createBoard(myGame.getRows(), myGame.getColumns());
+		myGame.drawBoard();
+
+		System.out.println("Please select your character!");
+
+		playerA.setSymbol(scan.nextLine().toUpperCase());
+		playerB.setSymbol(scan.nextLine().toUpperCase());
+		System.out.println(playerA.getSymbol() + " " + playerB.getSymbol());
 
 		System.out.println("New game! \n");
 
