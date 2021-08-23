@@ -28,13 +28,16 @@ public class Main {
 		Game myGame = new Game(3,3);
 		Player playerA = new Player("Player 1");
 		Player playerB = new Player("Player 2");
+		int size = 3;
 		System.out.println("Welcome to the game, please enter your names! (between 0 and 10 characters)\n");
 
 		// Setting the player names to default in case it's left empty
 		try {
 			// Setting player name and limiting it to 10 characters
-			playerA.setName(scan.nextLine().substring(0, 10));
-			playerB.setName(scan.nextLine().substring(0, 10));
+			String player1 = scan.nextLine();
+			playerA.setName(!player1.isEmpty() && player1.length() < 10 ? player1 : player1.substring(0, 10));
+			String player2 = scan.nextLine();
+			playerB.setName(!player2.isEmpty() && player2.length() < 10 ? player2 : player2.substring(0, 10));
 		} catch (IndexOutOfBoundsException e) {
 			playerA.setName("Player 1");
 			playerB.setName("Player 2");
@@ -47,11 +50,56 @@ public class Main {
 
 		System.out.println("Please select your character!");
 
-		playerA.setSymbol(scan.nextLine().toUpperCase());
-		playerB.setSymbol(scan.nextLine().toUpperCase());
+		// Setting the symbols manually in case it's left empty
+		try {
+			playerA.setSymbol(scan.nextLine().toUpperCase());
+			playerB.setSymbol(scan.nextLine().toUpperCase());
+		} catch (NullPointerException e) {
+			playerA.setSymbol("X");
+			playerB.setSymbol("O");
+		}
 		System.out.println(playerA.getSymbol() + " " + playerB.getSymbol());
 
 		System.out.println("New game! \n");
+
+		int starter = (int) (1 + Math.random() * 2);
+		System.out.println(starter);
+
+		boolean winner = false;
+
+		while (!winner) {
+
+			System.out.print("Enter your character: ");
+			String currentSymbol = scan.nextLine().toUpperCase();
+			System.out.println();
+			System.out.println("Type in the coordinates for your next step: ");
+			int firstCoordinate = Integer.parseInt(scan.nextLine());
+			int secondCoordinate = Integer.parseInt(scan.nextLine());
+
+			if ((0 <= firstCoordinate && firstCoordinate < size) || (0 <= secondCoordinate && secondCoordinate < size)) {
+
+				winner = myGame.move(firstCoordinate, secondCoordinate, 3, currentSymbol);
+			} else {
+				System.out.println("Coordinates are out of range, please select new ones");
+
+				int newRow = Integer.parseInt(scan.nextLine());
+				int newColumn = Integer.parseInt(scan.nextLine());
+
+				winner = myGame.move(newRow, newColumn, size, currentSymbol);
+			}
+			int counter = 0;
+			System.out.println(counter + " : " +winner);
+			counter++;
+			myGame.drawBoard();
+			if (winner) {
+				System.out.println("Player with symbol " + currentSymbol + " has won!");
+				break;
+			}
+
+		}
+
+
+		System.out.println();
 
 		Main game = new Main();
 

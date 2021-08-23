@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Game {
 
   int columns = 0;
@@ -7,7 +9,7 @@ public class Game {
   public Game(int rows, int columns) {
     this.rows = rows;
     this.columns = columns;
-    this.board = new String[columns][rows];
+    this.board = new String[rows][columns];
   }
 
   public int getColumns() {
@@ -58,6 +60,69 @@ public class Game {
         }
       }
     }
+  }
+
+  public boolean move (int row, int column, int size, String symbol) {
+    Scanner scan =  new Scanner(System.in);
+
+      if (board[row][column].isBlank()) {
+        board[row][column] = symbol;
+      } else {
+        System.out.println("Coordinates are already occupied, please select a new one");
+
+        row = scan.nextInt();
+        column = scan.nextInt();
+
+        this.move(row, column, size, symbol);
+      }
+
+      return this.checkWinner(row, column, symbol, size);
+  }
+
+  public boolean checkWinner (int row, int column, String symbol, int size) {
+    boolean won = false;
+
+    // Check rows
+    for (int i = 0; i < size; i++) {
+      if ( !board[row][i].equals(symbol)) {
+        break;
+      }
+      if (i == size-1) {
+        won = true;
+      }
+    }
+
+    // Check columns
+    for (int i = 0; i < size; i++) {
+      if ( board[i][column] != symbol) {
+        break;
+      }
+      if (i == size-1) {
+        won = true;
+      }
+    }
+
+    // Check diagonal
+    for (int i = 0; i < size; i++) {
+      if ( board[i][i] != symbol) {
+        break;
+      }
+      if (i == size-1) {
+        won = true;
+      }
+    }
+
+    // Check reverse diagonal
+    for (int i = 0; i < size; i++) {
+      if ( board[i][size- (i + 1)] != symbol) {
+        break;
+      }
+      if (i == size-1) {
+        won = true;
+      }
+    }
+
+  return won;
   }
 
 }
