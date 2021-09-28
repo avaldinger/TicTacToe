@@ -71,20 +71,25 @@ public class Main {
 			System.out.print("Enter your character: ");
 			String currentSymbol = scan.nextLine().toUpperCase();
 			System.out.println();
-			System.out.println("Type in the coordinates for your next step: ");
-			int firstCoordinate = Integer.parseInt(scan.nextLine());
-			int secondCoordinate = Integer.parseInt(scan.nextLine());
 
-			if ((0 <= firstCoordinate && firstCoordinate > size) || (0 <= secondCoordinate && secondCoordinate > size)) {
 
-				winner = myGame.move(firstCoordinate, secondCoordinate, 3, currentSymbol);
-			} else {
-				System.out.println("Coordinates are out of range, please select new ones");
+			boolean correctCoordinates = false;
 
-				int newRow = Integer.parseInt(scan.nextLine());
-				int newColumn = Integer.parseInt(scan.nextLine());
+			while (!correctCoordinates) {
+				System.out.println("Type in the coordinates for your next step: ");
+				int firstCoordinate = Integer.parseInt(scan.nextLine());
+				int secondCoordinate = Integer.parseInt(scan.nextLine());
+				try {
+					if ((0 <= firstCoordinate && firstCoordinate > size) && (0 <= secondCoordinate
+							&& secondCoordinate > size)) {
 
-				winner = myGame.move(newRow, newColumn, size, currentSymbol);
+						winner = myGame.move(firstCoordinate, secondCoordinate, size, currentSymbol);
+						correctCoordinates = true;
+					}
+				}catch (IndexOutOfBoundsException e) {
+					System.out.println("Coordinates are out of range, please select new ones");
+				}
+
 			}
 			int counter = 0;
 			System.out.println(counter + " : " +winner);
