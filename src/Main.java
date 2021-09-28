@@ -80,8 +80,8 @@ public class Main {
 				int firstCoordinate = Integer.parseInt(scan.nextLine());
 				int secondCoordinate = Integer.parseInt(scan.nextLine());
 				try {
-					if ((0 <= firstCoordinate && firstCoordinate > size) && (0 <= secondCoordinate
-							&& secondCoordinate > size)) {
+					if ((0 <= firstCoordinate && firstCoordinate < size) && (0 <= secondCoordinate
+							&& secondCoordinate < size)) {
 
 						winner = myGame.move(firstCoordinate, secondCoordinate, size, currentSymbol);
 						correctCoordinates = true;
