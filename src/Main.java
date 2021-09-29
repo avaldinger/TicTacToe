@@ -76,6 +76,7 @@ public class Main {
 							&& secondCoordinate < size)) {
 
 						winner = myGame.move(firstCoordinate, secondCoordinate, size, currentSymbol);
+						System.out.println("won? " + winner);
 						correctCoordinates = true;
 					}
 				}catch (IndexOutOfBoundsException e) {

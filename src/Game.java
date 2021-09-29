@@ -76,6 +76,8 @@ public class Game {
         this.move(row, column, size, symbol);
       }
 
+    this.drawBoard();
+
       return this.checkWinner(row, column, symbol, size);
   }
 
@@ -104,7 +106,8 @@ public class Game {
 
     // Check diagonal
     for (int i = 0; i < size; i++) {
-      if ( board[i][i] != symbol) {
+      if ( !board[i][i].equals(symbol)) {
+        System.out.println("Board element: " + board[i][i] + " " + i);
         break;
       }
       if (i == size-1) {
@@ -114,7 +117,7 @@ public class Game {
 
     // Check reverse diagonal
     for (int i = 0; i < size; i++) {
-      if ( board[i][size- (i + 1)] != symbol) {
+      if ( !board[i][size- (i + 1)].equals(symbol)) {
         break;
       }
       if (i == size-1) {
